@@ -106,6 +106,10 @@ public:
   void getSensor(sensor_t *);
   void reset(void);
 
+  // Configuration options
+  void setLowPassFilter(bool enable);
+  void setOffsetCancellation(bool enable);
+
   void enableInterrupts(bool);
   void interruptsActiveHigh(bool);
   lis2mdl_data_t raw; ///< struct instance to hold raw data

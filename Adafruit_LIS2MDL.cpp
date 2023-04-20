@@ -225,6 +225,22 @@ void Adafruit_LIS2MDL::reset(void) {
   setDataRate(LIS2MDL_RATE_100_HZ);
 }
 
+void Adafruit_LIS2MDL::setOffsetCancellation(bool enable) {
+  Adafruit_BusIO_Register config_b = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, LIS2MDL_CFG_REG_B, /*width=*/1);
+  Adafruit_BusIO_RegisterBits offset_cancellation =
+      Adafruit_BusIO_RegisterBits(&config_b, /*bits=*/1, /*shift=*/2);
+  offset_cancellation.write(enable);
+}
+
+void Adafruit_LIS2MDL::setLowPassFilter(bool enable) {
+  Adafruit_BusIO_Register config_b = Adafruit_BusIO_Register(
+      i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, LIS2MDL_CFG_REG_B, /*width=*/1);
+  Adafruit_BusIO_RegisterBits low_pass_filter =
+      Adafruit_BusIO_RegisterBits(&config_b, /*bits=*/1, /*shift=*/0);
+  low_pass_filter.write(enable);
+}
+
 /**************************************************************************/
 /*!
     @brief  Sets the magnetometer's update rate
